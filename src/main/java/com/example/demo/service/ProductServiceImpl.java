@@ -11,40 +11,39 @@ import com.example.demo.repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-	
+
 	@Autowired
 	public ProductRepository productRepository;
-	
+
 	@Override
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();
 	}
-	
+
 	@Override
 	public Optional<Product> getProductById(Long id) {
 		return productRepository.findById(id);
 	}
-	
+
 	@Override
 	public Product addProduct(Product product) {
 		return productRepository.save(product);
 	}
-	
+
 	@Override
 	public Product updateProduct(Long id, Product product) {
 		Optional<Product> existingProduct = productRepository.findById(id);
-        if (existingProduct.isPresent()) {
-            Product updatedProduct = existingProduct.get();
-            updatedProduct.setName(product.getName());
-            updatedProduct.setPrice(product.getPrice());
-            return productRepository.save(updatedProduct);
-        }
-        return null;
+		if (existingProduct.isPresent()) {
+			Product updatedProduct = existingProduct.get();
+			updatedProduct.setName(product.getName());
+			updatedProduct.setPrice(product.getPrice());
+			return productRepository.save(updatedProduct);
+		}
+		return null;
 	}
-	
+
 	@Override
 	public void deleteProduct(Long id) {
 		productRepository.deleteById(id);
 	}
 }
-
